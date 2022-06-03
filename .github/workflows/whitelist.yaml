@@ -3,7 +3,7 @@ ame: Whitelist Bastion Users
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - whitelist.yaml
 
