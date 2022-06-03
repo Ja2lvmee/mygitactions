@@ -1,0 +1,65 @@
+name: Whitelist Bastion Users
+
+
+
+on:
+
+  push:
+
+    branches:
+
+      - master
+
+    paths:
+
+      - whitelist.yaml
+
+
+
+env:
+
+  AWS_SESSION_DURATION: 3600
+
+
+
+jobs:
+
+  setup:
+
+    name: Setup Run
+
+    runs-on: ubuntu-latest
+
+    run: |
+
+      echo "Hi"
+
+    steps:
+
+      - name: Checkout 🛎️
+
+        uses: actions/checkout@v2
+
+        with:
+
+          persist-credentials: "false"
+
+      - name: Determine Environment
+
+        run: |
+
+          echo "Hello"
+
+
+
+          # use aws cli to update the prefix list with the values in whitelist.yaml
+
+          # id of prefix list will be in SSM Parameter Store at key ssh/whitelist
+
+          # aws ec2 modify-managed-prefix-list --prefix-list-id (from ssm parameter store) \
+
+            --remove-entries {list to remove} \
+
+            --add-entries {list to add}
+
+            --max-entries {count of entries in list to add}
