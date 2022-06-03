@@ -1,65 +1,37 @@
+# This is a basic workflow to help you get started with Actions
+
 name: Whitelist Bastion Users
 
-
-
+# Controls when the workflow will run
 on:
-
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-
-    branches:
-
-      - master
-
-    paths:
-
-      - whitelist.yaml
-
-
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
-
   AWS_SESSION_DURATION: 3600
-
-
-
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
-  setup:
-
-    name: Setup Run
-
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    run: |
-
-      echo "Hi"
-
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
 
-      - name: Checkout 🛎️
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
 
-        uses: actions/checkout@v2
-
-        with:
-
-          persist-credentials: "false"
-
-      - name: Determine Environment
-
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
         run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
 
-          echo "Hello"
-
-
-
-          # use aws cli to update the prefix list with the values in whitelist.yaml
-
-          # id of prefix list will be in SSM Parameter Store at key ssh/whitelist
-
-          # aws ec2 modify-managed-prefix-list --prefix-list-id (from ssm parameter store) \
-
-            --remove-entries {list to remove} \
-
-            --add-entries {list to add}
-
-            --max-entries {count of entries in list to add}
