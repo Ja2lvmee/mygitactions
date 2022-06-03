@@ -1,4 +1,4 @@
-ame: Whitelist Bastion Users
+Name: Whitelist Bastion Users
 
 on:
   push:
